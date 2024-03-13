@@ -6,11 +6,13 @@ use Slim\Factory\AppFactory;
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/controllers/RilevatoriUmiditaController.php';
 require __DIR__ . '/controllers/RilevatoriTemperaturaController.php';
+require __DIR__ . '/controllers/ImpiantoController.php';
 
 require_once("./Impianto.php");
 
 $app = AppFactory::create();
 
+$app->get('/impianto', "ImpiantoController:index");
 $app->get('/rilevatori_di_umidita', "RilevatoriUmiditaController:index");
 $app->get('/rilevatori_di_umidita/{identificativo}', "RilevatoriUmiditaController:search");
 $app->get('/rilevatori_di_umidita/{identificativo}/misurazioni', "RilevatoriUmiditaController:misurazioni");
