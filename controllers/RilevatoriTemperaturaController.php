@@ -67,10 +67,11 @@
             $valore = $bodyParser['valore'];
             $unitaDiMisura = $bodyParser['unitaDiMisura'];
             $codiceSeriale = $bodyParser['codiceSeriale'];
-            $tipologia = $bodyParser['tipologia'];
-
-            $rilevatore = new RilevatoreDiTemperatura($id, $data, $valore, $unitaDiMisura, $codiceSeriale, $tipologia);
-            file_put_contents("../rilevatori.txt", $rilevatore);
+            
+            $rilevatore = new RilevatoreDiTemperatura($id, $unitaDiMisura, $codiceSeriale, $data, $valore);
+            //file_put_contents("./rilevatori.txt", $rilevatore);
+            $response->getBody()->write(json_encode($rilevatore));
+            return $response->withStatus(200);
         }
 
         function update(Request $request, Response $response, $args){
@@ -91,7 +92,10 @@
                 return $response->withHeader("Content-type: application/json")->withStatus(201);
             }
 
-            $rilevatore = new RilevatoreDiTemperatura($id, $data, $valore, $unitaDiMisura, $codiceSeriale);
+            $rilevatore = new RilevatoreDiTemperatura($id, $unitaDiMisura, $codiceSeriale, $data, $valore);
+            $rilevatore->setTipologia("gas");
+            $response->getBody()->write(json_encode($rilevatore));
+            return $response->withStatus(200);
         }
     }
 ?>

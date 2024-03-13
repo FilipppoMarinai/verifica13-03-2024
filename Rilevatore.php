@@ -5,10 +5,11 @@
         private $unitaDiMisura;
         private $codiceSeriale;
 
-        public function __constructor($id, $data, $valore, $unitaDiMisura, $codiceSeriale){
+        public function __constructor($id, $unitaDiMisura, $codiceSeriale, $data, $valore){
             $this->identificativo = $id;
             $this->unitaDiMisura = $unitaDiMisura;
             $this->codiceSeriale = $codiceSeriale;
+            $this->addMisurazioni(["data" => $data, "valore" => $valore]);
         }
 
         public function getId(){
@@ -31,6 +32,10 @@
                 }
             }
             return $m;
+        }
+
+        public function addMisurazioni($arr){
+            array_push($this->misurazioni, $arr);
         }
 
         public function jsonSerialize(){

@@ -1,4 +1,7 @@
 <?php
+    require_once("./RilevatoreDiUmidita.php");
+    require_once("./RilevatoreDiTemperatura.php");
+
     class Impianto implements JsonSerializable{
         private $nome;
         private $latitudine;
@@ -9,7 +12,10 @@
             $this->nome = $nome;
             $this->latitudine = $lat;
             $this->longitudine = $long;
-            $this->rilevatori = file_get_contents("./rilevatori.txt");
+            $r1 = new RilevatoreDiTemperatura("1", "°C", "11h", "22/03/12", "34");
+            $r2 = new RilevatoreDiUmidita("1", "%", "12er", "10/06/08", "50");
+            // $this->rilevatori = file_get_contents("./rilevatori.txt");
+            $this->rilevatori = array($r1, $r2);
         }
 
         public function getRilevatori($class){

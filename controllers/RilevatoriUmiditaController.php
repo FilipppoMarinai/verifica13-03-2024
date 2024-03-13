@@ -9,7 +9,7 @@
         function index(Request $request, Response $response, $args){
             $impianto = new Impianto("h2", "34", "45");
             $r = $impianto->getRilevatori("RilevatoreDiUmidita");
-            $response->getBody()->write();
+            $response->getBody()->write(json_encode($r));
             return $response;
         }
 
@@ -70,8 +70,10 @@
             $codiceSeriale = $bodyParser['codiceSeriale'];
             $posizione= $bodyParser['posizione'];
 
-            $rilevatore = new RilevatoreDiUmidita($id, $data, $valore, $unitaDiMisura, $codiceSeriale, $posizione);
-            file_put_contents("../rilevatori.txt", $rilevatore);
+            $rilevatore = new RilevatoreDiUmidita($id, $unitaDiMisura, $codiceSeriale, $data, $valore);
+            //file_put_contents("../rilevatori.txt", $rilevatore);
+            $response->getBody()->write(json_encode($rilevatore));
+            return $response->withStatus(200);
         }
 
         function update(Request $request, Response $response, $args){
@@ -92,7 +94,9 @@
                 return $response->withHeader("Content-type: application/json")->withStatus(201);
             }
 
-            $rilevatore = new RilevatoreDiUmidita($id, $data, $valore, $unitaDiMisura, $codiceSeriale);
+            $rilevatore = new RilevatoreDiUmidita($id, $unitaDiMisura, $codiceSeriale, $data, $valore);
+            $response->getBody()->write(json_encode($rilevatore));
+            return $response->withStatus(200);
         }
     }
 ?>

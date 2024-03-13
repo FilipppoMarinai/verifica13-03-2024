@@ -1,15 +1,26 @@
 <?php
-    include "./Rilevatore.php";
-
-    class RilevatoreDiUmidita extends Rilevatore{
+require_once "Rilevatore.php";
+    class RilevatoreDiUmidita extends Rilevatore implements JsonSerializable{
         private $posizione;
 
-        public function __constructor($id, $data, $valore, $unita, $codice, $pos){
-            $this->identificativo = $id;
-            $this->unitaDiMisura = $unita;
-            $this->codiceSeriale = $codice;
-            array_push($this->misurazioni, {"data" => $data, "valore" => $valore});
-            $this->posizione = $pos;
+        public function __constructor($id, $unitaDiMisura, $codiceSeriale, $data, $valore){
+            parent::__constructor($id, $unitaDiMisura, $codiceSeriale, $data, $valore);
+            $this->setposizione("aria");
+        }
+
+        public function setPosizione($pos){
+            $this->tipologia = $tipologia;
+        }
+
+        public function getPosizione(){
+            return $this->tipologia;
+        }
+
+        public function jsonSerialize(){
+            $r = [
+                "posizione" => $this->getPosizione(),
+            ];
+            return $r;
         }
     }
 ?>
